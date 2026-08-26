@@ -1,0 +1,11 @@
+{
+  "type": "normal",
+  "fileName": "profile-aethrixn.svg",
+  "backgroundColor": "#0B1119",
+  "foregroundColor": "#EAF2F8",
+  "strongColor": "#39D7FF",
+  "weakColor": "#7B8C9D",
+  "radarColor": "#39D7FF",
+  "growingAnimation": true,
+  "contribColors": ["#101822", "#0C4F63", "#177E9B", "#25B4DC", "#39D7FF"]
+}

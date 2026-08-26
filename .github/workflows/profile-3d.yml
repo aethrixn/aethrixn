@@ -1,0 +1,35 @@
+# 3B katkı alanını her gece yeniden üretir ve repoya işler.
+# Aksiyon sürümü 2026-08-27'de doğrulandı: en güncel yayın v0.9.3.
+# Çıktı yolu: profile-3d-contrib/<fileName>  (fileName profile-3d.json içinde)
+name: Generate 3D contribution field
+
+on:
+  schedule:
+    - cron: "31 0 * * *"      # her gün 00:31 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: generate-3d-contribution-field
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: yoshi389111/github-profile-3d-contrib@v0.9.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          SETTING_JSON: ./profile-3d.json
+
+      - name: Commit & push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A profile-3d-contrib
+          if git commit -m "chore: refresh 3d contribution field"; then
+            git push
+          fi
