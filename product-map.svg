@@ -1,76 +1,60 @@
+
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
-  <title id="title">Aethrix Product Constellation</title>
-  <desc id="desc">An animated map connecting Buildary, Spatial AI, Visual Commerce and Research Agents.</desc>
+  <title id="title">Aethrixn selected work — animated monochrome product index</title>
+  <desc id="desc">A black-and-white editorial map connecting Buildary, Spatial AI, Visual Commerce and Research Agents.</desc>
   <defs>
-    <linearGradient id="mapBg" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#07101C"/><stop offset="1" stop-color="#0C1424"/>
-    </linearGradient>
-    <radialGradient id="core"><stop stop-color="#5DE0FF" stop-opacity=".34"/><stop offset="1" stop-color="#5DE0FF" stop-opacity="0"/></radialGradient>
-    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#87A6CC" fill-opacity=".12"/></pattern>
-    <filter id="mapGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <path id="p1" d="M600 260 C500 218 440 154 335 132"/>
-    <path id="p2" d="M600 260 C702 216 760 156 865 132"/>
-    <path id="p3" d="M600 260 C502 306 442 370 335 392"/>
-    <path id="p4" d="M600 260 C700 306 760 370 865 392"/>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#030303"/><stop offset="1" stop-color="#0D0D0D"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#FFFFFF" stroke-opacity=".035"/></pattern>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <path id="a" d="M600 260C514 236 454 183 391 154"/>
+    <path id="b" d="M600 260C686 236 746 183 809 154"/>
+    <path id="c" d="M600 260C514 286 454 337 391 366"/>
+    <path id="d" d="M600 260C686 286 746 337 809 366"/>
   </defs>
-  <rect x="1" y="1" width="1198" height="518" rx="28" fill="url(#mapBg)"/>
-  <rect x="1" y="1" width="1198" height="518" rx="28" fill="url(#dots)"/>
-  <rect x="1.5" y="1.5" width="1197" height="517" rx="27" fill="none" stroke="#263B58" stroke-width="2"/>
-
+  <rect x="1" y="1" width="1198" height="518" rx="24" fill="url(#paper)"/>
+  <rect x="1" y="1" width="1198" height="518" rx="24" fill="url(#grid)"/>
+  <rect x="1.5" y="1.5" width="1197" height="517" rx="23" fill="none" stroke="#404040"/>
   <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
-    <text x="42" y="48" fill="#8DA2BE" font-size="13" font-weight="700" letter-spacing="3.5">PRODUCT CONSTELLATION / 04 ACTIVE SIGNALS</text>
-    <text x="1158" y="48" text-anchor="end" fill="#5DE0FF" font-size="12" font-weight="700" letter-spacing="2">AETHRIX LAB</text>
+    <text x="38" y="43" fill="#EDEDED" font-size="12" font-weight="800" letter-spacing="3.8">SELECTED WORK / PRODUCT INDEX</text>
+    <text x="1162" y="43" text-anchor="end" fill="#777777" font-size="11" font-weight="800" letter-spacing="2.8">AETHRIX ATELIER — 2026</text>
+    <line x1="38" y1="62" x2="1162" y2="62" stroke="#323232"/>
   </g>
-
-  <circle cx="600" cy="260" r="116" fill="url(#core)"><animate attributeName="r" values="104;122;104" dur="4s" repeatCount="indefinite"/></circle>
-  <circle cx="600" cy="260" r="58" fill="#0C1C30" stroke="#5DE0FF" stroke-opacity=".7" stroke-width="2"/>
-  <circle cx="600" cy="260" r="43" fill="none" stroke="#FF9B55" stroke-opacity=".45" stroke-dasharray="8 10">
-    <animateTransform attributeName="transform" type="rotate" from="0 600 260" to="360 600 260" dur="18s" repeatCount="indefinite"/>
-  </circle>
-  <g text-anchor="middle" font-family="Inter, ui-sans-serif, sans-serif">
-    <text x="600" y="255" fill="#F2F7FF" font-size="17" font-weight="800" letter-spacing="2">AETHRIX</text>
-    <text x="600" y="278" fill="#8DA2BE" font-size="10" font-weight="700" letter-spacing="2">PRODUCT LAB</text>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity=".18" stroke-width="1" stroke-dasharray="4 7"><use href="#a"/><use href="#b"/><use href="#c"/><use href="#d"/></g>
+  <g fill="#FFFFFF" filter="url(#glow)">
+    <circle r="3"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#a"/></animateMotion></circle>
+    <circle r="3"><animateMotion dur="6s" begin="-2s" repeatCount="indefinite"><mpath href="#b"/></animateMotion></circle>
+    <circle r="3"><animateMotion dur="5.5s" begin="-3.4s" repeatCount="indefinite"><mpath href="#c"/></animateMotion></circle>
+    <circle r="3"><animateMotion dur="6.4s" begin="-1.2s" repeatCount="indefinite"><mpath href="#d"/></animateMotion></circle>
   </g>
-
-  <g fill="none" stroke="#5DE0FF" stroke-opacity=".27" stroke-width="1.5" stroke-dasharray="5 8">
-    <use href="#p1"/><use href="#p2"/><use href="#p3"/><use href="#p4"/>
+  <g transform="translate(600 260)">
+    <circle r="58" fill="#050505" stroke="#BDBDBD"/>
+    <circle r="45" fill="none" stroke="#505050" stroke-dasharray="7 9"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite"/></circle>
+    <text text-anchor="middle" y="-3" fill="#FFFFFF" font-family="Inter, ui-sans-serif, sans-serif" font-size="18" font-weight="900" letter-spacing="3">AETHRIX</text>
+    <text text-anchor="middle" y="19" fill="#8A8A8A" font-family="Inter, ui-sans-serif, sans-serif" font-size="9" font-weight="800" letter-spacing="2">PRODUCT ATELIER</text>
   </g>
-  <g fill="#5DE0FF" filter="url(#mapGlow)">
-    <circle r="4"><animateMotion dur="4.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
-    <circle r="4"><animateMotion dur="5.2s" begin="-1.5s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
-    <circle r="4"><animateMotion dur="4.8s" begin="-2.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
-    <circle r="4"><animateMotion dur="5.5s" begin="-3s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
-  </g>
-
   <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
-    <g transform="translate(44 76)">
-      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#28567B"/>
-      <text x="22" y="29" fill="#5DE0FF" font-size="11" font-weight="800" letter-spacing="2">01 / FLAGSHIP</text>
-      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">BUILDARY</text>
-      <text x="22" y="86" fill="#AFC0D8" font-size="13">AI-native, open-source web creation.</text>
-      <text x="22" y="107" fill="#6F89A9" font-size="12">Describe it. Build it. Review it. Ship it.</text>
+    <g transform="translate(38 88)">
+      <rect width="396" height="132" rx="12" fill="#070707" stroke="#3A3A3A"/>
+      <text x="22" y="41" fill="#FFFFFF" fill-opacity=".13" font-size="48" font-weight="900">01</text><text x="103" y="34" fill="#8A8A8A" font-size="10" font-weight="800" letter-spacing="2.5">OPEN-SOURCE FLAGSHIP</text>
+      <text x="103" y="65" fill="#FFFFFF" font-size="25" font-weight="850" letter-spacing="1">BUILDARY</text><text x="103" y="91" fill="#B7B7B7" font-size="13">AI-native web creation.</text><text x="103" y="112" fill="#686868" font-size="11.5">Describe → construct → inspect → ship.</text>
     </g>
-    <g transform="translate(804 76)">
-      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#6651A7"/>
-      <text x="22" y="29" fill="#A991FF" font-size="11" font-weight="800" letter-spacing="2">02 / SPACE</text>
-      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">SPATIAL AI</text>
-      <text x="22" y="86" fill="#AFC0D8" font-size="13">Rooms reimagined from a single image.</text>
-      <text x="22" y="107" fill="#6F89A9" font-size="12">Concept → redesign → decision.</text>
+    <g transform="translate(766 88)">
+      <rect width="396" height="132" rx="12" fill="#070707" stroke="#3A3A3A"/>
+      <text x="22" y="41" fill="#FFFFFF" fill-opacity=".13" font-size="48" font-weight="900">02</text><text x="103" y="34" fill="#8A8A8A" font-size="10" font-weight="800" letter-spacing="2.5">SPACE / IMAGE</text>
+      <text x="103" y="65" fill="#FFFFFF" font-size="25" font-weight="850" letter-spacing="1">SPATIAL AI</text><text x="103" y="91" fill="#B7B7B7" font-size="13">Rooms reimagined from one frame.</text><text x="103" y="112" fill="#686868" font-size="11.5">Image → redesign → decision.</text>
     </g>
-    <g transform="translate(44 318)">
-      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#9B5F38"/>
-      <text x="22" y="29" fill="#FF9B55" font-size="11" font-weight="800" letter-spacing="2">03 / COMMERCE</text>
-      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">VISUAL COMMERCE</text>
-      <text x="22" y="86" fill="#AFC0D8" font-size="13">Cars and products placed in better worlds.</text>
-      <text x="22" y="107" fill="#6F89A9" font-size="12">Background intelligence for better listings.</text>
+    <g transform="translate(38 300)">
+      <rect width="396" height="132" rx="12" fill="#070707" stroke="#3A3A3A"/>
+      <text x="22" y="41" fill="#FFFFFF" fill-opacity=".13" font-size="48" font-weight="900">03</text><text x="103" y="34" fill="#8A8A8A" font-size="10" font-weight="800" letter-spacing="2.5">AUTOMOTIVE / STUDIO</text>
+      <text x="103" y="65" fill="#FFFFFF" font-size="23" font-weight="850" letter-spacing=".5">VISUAL COMMERCE</text><text x="103" y="91" fill="#B7B7B7" font-size="13">Better worlds for real subjects.</text><text x="103" y="112" fill="#686868" font-size="11.5">Preserve object → transform context.</text>
     </g>
-    <g transform="translate(804 318)">
-      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#347A6D"/>
-      <text x="22" y="29" fill="#65DDBF" font-size="11" font-weight="800" letter-spacing="2">04 / KNOWLEDGE</text>
-      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">RESEARCH AGENTS</text>
-      <text x="22" y="86" fill="#AFC0D8" font-size="13">Research, article and thesis workflows.</text>
-      <text x="22" y="107" fill="#6F89A9" font-size="12">Evidence → structure → long-form thinking.</text>
+    <g transform="translate(766 300)">
+      <rect width="396" height="132" rx="12" fill="#070707" stroke="#3A3A3A"/>
+      <text x="22" y="41" fill="#FFFFFF" fill-opacity=".13" font-size="48" font-weight="900">04</text><text x="103" y="34" fill="#8A8A8A" font-size="10" font-weight="800" letter-spacing="2.5">KNOWLEDGE SYSTEMS</text>
+      <text x="103" y="65" fill="#FFFFFF" font-size="23" font-weight="850" letter-spacing=".5">RESEARCH AGENTS</text><text x="103" y="91" fill="#B7B7B7" font-size="13">Evidence into long-form thinking.</text><text x="103" y="112" fill="#686868" font-size="11.5">Research → structure → argument.</text>
     </g>
   </g>
+  <path d="M38 482H1162" stroke="#303030"/>
+  <path d="M38 482H1162" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="120 1004"><animate attributeName="stroke-dashoffset" values="0;-1124" dur="8s" repeatCount="indefinite"/></path>
+  <text x="38" y="502" fill="#686868" font-family="JetBrains Mono, ui-monospace, monospace" font-size="10" letter-spacing="2">BUILD THE INTERACTION / HARDEN THE SYSTEM / SHIP THE LOOP</text>
 </svg>
-
