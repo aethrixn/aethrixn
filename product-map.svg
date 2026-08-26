@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Aethrix Product Constellation</title>
+  <desc id="desc">An animated map connecting Buildary, Spatial AI, Visual Commerce and Research Agents.</desc>
+  <defs>
+    <linearGradient id="mapBg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#07101C"/><stop offset="1" stop-color="#0C1424"/>
+    </linearGradient>
+    <radialGradient id="core"><stop stop-color="#5DE0FF" stop-opacity=".34"/><stop offset="1" stop-color="#5DE0FF" stop-opacity="0"/></radialGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#87A6CC" fill-opacity=".12"/></pattern>
+    <filter id="mapGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <path id="p1" d="M600 260 C500 218 440 154 335 132"/>
+    <path id="p2" d="M600 260 C702 216 760 156 865 132"/>
+    <path id="p3" d="M600 260 C502 306 442 370 335 392"/>
+    <path id="p4" d="M600 260 C700 306 760 370 865 392"/>
+  </defs>
+  <rect x="1" y="1" width="1198" height="518" rx="28" fill="url(#mapBg)"/>
+  <rect x="1" y="1" width="1198" height="518" rx="28" fill="url(#dots)"/>
+  <rect x="1.5" y="1.5" width="1197" height="517" rx="27" fill="none" stroke="#263B58" stroke-width="2"/>
+
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <text x="42" y="48" fill="#8DA2BE" font-size="13" font-weight="700" letter-spacing="3.5">PRODUCT CONSTELLATION / 04 ACTIVE SIGNALS</text>
+    <text x="1158" y="48" text-anchor="end" fill="#5DE0FF" font-size="12" font-weight="700" letter-spacing="2">AETHRIX LAB</text>
+  </g>
+
+  <circle cx="600" cy="260" r="116" fill="url(#core)"><animate attributeName="r" values="104;122;104" dur="4s" repeatCount="indefinite"/></circle>
+  <circle cx="600" cy="260" r="58" fill="#0C1C30" stroke="#5DE0FF" stroke-opacity=".7" stroke-width="2"/>
+  <circle cx="600" cy="260" r="43" fill="none" stroke="#FF9B55" stroke-opacity=".45" stroke-dasharray="8 10">
+    <animateTransform attributeName="transform" type="rotate" from="0 600 260" to="360 600 260" dur="18s" repeatCount="indefinite"/>
+  </circle>
+  <g text-anchor="middle" font-family="Inter, ui-sans-serif, sans-serif">
+    <text x="600" y="255" fill="#F2F7FF" font-size="17" font-weight="800" letter-spacing="2">AETHRIX</text>
+    <text x="600" y="278" fill="#8DA2BE" font-size="10" font-weight="700" letter-spacing="2">PRODUCT LAB</text>
+  </g>
+
+  <g fill="none" stroke="#5DE0FF" stroke-opacity=".27" stroke-width="1.5" stroke-dasharray="5 8">
+    <use href="#p1"/><use href="#p2"/><use href="#p3"/><use href="#p4"/>
+  </g>
+  <g fill="#5DE0FF" filter="url(#mapGlow)">
+    <circle r="4"><animateMotion dur="4.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+    <circle r="4"><animateMotion dur="5.2s" begin="-1.5s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+    <circle r="4"><animateMotion dur="4.8s" begin="-2.2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+    <circle r="4"><animateMotion dur="5.5s" begin="-3s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion></circle>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <g transform="translate(44 76)">
+      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#28567B"/>
+      <text x="22" y="29" fill="#5DE0FF" font-size="11" font-weight="800" letter-spacing="2">01 / FLAGSHIP</text>
+      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">BUILDARY</text>
+      <text x="22" y="86" fill="#AFC0D8" font-size="13">AI-native, open-source web creation.</text>
+      <text x="22" y="107" fill="#6F89A9" font-size="12">Describe it. Build it. Review it. Ship it.</text>
+    </g>
+    <g transform="translate(804 76)">
+      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#6651A7"/>
+      <text x="22" y="29" fill="#A991FF" font-size="11" font-weight="800" letter-spacing="2">02 / SPACE</text>
+      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">SPATIAL AI</text>
+      <text x="22" y="86" fill="#AFC0D8" font-size="13">Rooms reimagined from a single image.</text>
+      <text x="22" y="107" fill="#6F89A9" font-size="12">Concept → redesign → decision.</text>
+    </g>
+    <g transform="translate(44 318)">
+      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#9B5F38"/>
+      <text x="22" y="29" fill="#FF9B55" font-size="11" font-weight="800" letter-spacing="2">03 / COMMERCE</text>
+      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">VISUAL COMMERCE</text>
+      <text x="22" y="86" fill="#AFC0D8" font-size="13">Cars and products placed in better worlds.</text>
+      <text x="22" y="107" fill="#6F89A9" font-size="12">Background intelligence for better listings.</text>
+    </g>
+    <g transform="translate(804 318)">
+      <rect width="352" height="126" rx="18" fill="#0A1728" stroke="#347A6D"/>
+      <text x="22" y="29" fill="#65DDBF" font-size="11" font-weight="800" letter-spacing="2">04 / KNOWLEDGE</text>
+      <text x="22" y="61" fill="#F2F7FF" font-size="24" font-weight="850">RESEARCH AGENTS</text>
+      <text x="22" y="86" fill="#AFC0D8" font-size="13">Research, article and thesis workflows.</text>
+      <text x="22" y="107" fill="#6F89A9" font-size="12">Evidence → structure → long-form thinking.</text>
+    </g>
+  </g>
+</svg>
+
