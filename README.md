@@ -1,3 +1,4 @@
+
 <div align="center">
   <img src="./hero.svg" width="100%" alt="Animated premium monochrome anime AETHRIXN product atelier, connecting AI product design, engineering and research systems." />
 </div>
@@ -12,7 +13,7 @@
 
 ## `01 / WHO I AM`
 
-I’m **Mirza Şimşek** — a software engineering undergraduate, product engineer at **[CodionX](https://codionx.com)**, and the builder behind experiments that live where **AI, product design and full-stack systems** collide.
+I’m **Mirza Şimşek** — a Management Information Systems student focused on software and digital product development, product engineer at **[CodionX](https://codionx.com)**, and the builder behind experiments that live where **AI, product design and full-stack systems** collide.
 
 I’ve been making things since childhood: not because one stack was fashionable, but because an idea felt too interesting to leave imaginary. Today that instinct turns into AI-native products, original block libraries, research agents, marketplace systems, mobile apps and interfaces designed all the way from first principle to production edge.
 
@@ -20,7 +21,7 @@ I’ve been making things since childhood: not because one stack was fashionable
 
 ```ts
 const mirza = {
-  role: ["AI Product Builder", "Software Engineering Student"],
+  role: ["AI Product Builder", "Management Information Systems Student"],
   studio: "CodionX",
   defaultMode: "turn the strange idea into the working product",
   caresAbout: ["original interaction models", "design systems", "reliable architecture"],
@@ -130,4 +131,3 @@ I choose tools by the shape of the problem. The recurring core is **TypeScript +
   <br />
   <sub><strong>Currently:</strong> turning ambitious product ideas into systems that can survive contact with reality.</sub>
 </div>
-
