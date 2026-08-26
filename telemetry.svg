@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="270" viewBox="0 0 1200 270" role="img" aria-labelledby="title desc">
+  <title id="title">Aethrixn system telemetry</title>
+  <desc id="desc">Monochrome animated telemetry showing more than two thousand contributions, a commit-driven practice and continuous product shipping.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#020202"/><stop offset="1" stop-color="#101010"/></linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <clipPath id="plot"><rect x="38" y="174" width="1124" height="58"/></clipPath>
+  </defs>
+  <rect x="1" y="1" width="1198" height="268" rx="22" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="1197" height="267" rx="21" fill="none" stroke="#393939"/>
+  <g font-family="Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <text x="38" y="40" fill="#EDEDED" font-size="12" font-weight="800" letter-spacing="3.6">SYSTEM TELEMETRY / LAST 12 MONTHS</text>
+    <text x="1162" y="40" text-anchor="end" fill="#737373" font-size="10" font-weight="800" letter-spacing="2">LIVE PRACTICE — NOT VANITY METRICS</text>
+    <line x1="38" y1="58" x2="1162" y2="58" stroke="#333333"/>
+    <g transform="translate(38 82)"><text fill="#FFFFFF" font-size="42" font-weight="900">2K+</text><text y="27" fill="#737373" font-size="10" font-weight="800" letter-spacing="2">CONTRIBUTIONS</text></g>
+    <g transform="translate(332 82)"><text fill="#FFFFFF" font-size="42" font-weight="900">99%</text><text y="27" fill="#737373" font-size="10" font-weight="800" letter-spacing="2">COMMITS</text></g>
+    <g transform="translate(626 82)"><text fill="#FFFFFF" font-size="42" font-weight="900">AI × UI</text><text y="27" fill="#737373" font-size="10" font-weight="800" letter-spacing="2">CURRENT VECTOR</text></g>
+    <g transform="translate(920 82)"><text fill="#FFFFFF" font-size="42" font-weight="900">SHIP</text><text y="27" fill="#737373" font-size="10" font-weight="800" letter-spacing="2">DEFAULT MODE</text></g>
+  </g>
+  <g clip-path="url(#plot)">
+    <path d="M38 221 C92 216 116 224 168 214 S256 200 310 212 S396 221 448 193 S536 217 586 200 S666 168 724 190 S804 216 858 184 S950 209 1004 172 S1090 200 1162 158" fill="none" stroke="#FFFFFF" stroke-opacity=".19" stroke-width="1.5"/>
+    <path d="M38 221 C92 216 116 224 168 214 S256 200 310 212 S396 221 448 193 S536 217 586 200 S666 168 724 190 S804 216 858 184 S950 209 1004 172 S1090 200 1162 158" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="150 1200" filter="url(#glow)">
+      <animate attributeName="stroke-dashoffset" values="1200;-150" dur="5.8s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <line x1="38" y1="232" x2="1162" y2="232" stroke="#2C2C2C"/>
+  <g fill="#616161"><circle cx="38" cy="232" r="2"/><circle cx="320" cy="232" r="2"/><circle cx="600" cy="232" r="2"/><circle cx="880" cy="232" r="2"/><circle cx="1162" cy="232" r="2"/></g>
+  <text x="38" y="252" fill="#666666" font-family="JetBrains Mono, ui-monospace, monospace" font-size="9" letter-spacing="2">DESIGN → CODE → QA → RELEASE → ITERATE</text>
+</svg>
+
