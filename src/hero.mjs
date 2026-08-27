@@ -1,172 +1,160 @@
+import fs from 'node:fs/promises';
 import { T } from './tokens.mjs';
-import { defsCommon, auroraLayer, scanline, marchingBorder, pulseDot, typewriter, chip, svgOpen, esc, n } from './lib.mjs';
+import { esc, svgOpen } from './lib.mjs';
 
-// ── Düzenlenebilir içerik ────────────────────────────────────────────────────
+// Tek odaklı profil kahramanı. Metni değiştirmek için yalnızca bu blok yeterli.
 export const HERO = {
-  eyebrow: 'MIRZA ŞİMŞEK — PRODUCT ENGINEER @ CODIONX',
+  eyebrow: 'MIRZA ŞİMŞEK · PRODUCT BUILDER',
   wordmark: 'AETHRIXN',
-  subtitle: 'MANAGEMENT INFORMATION SYSTEMS · AI-NATIVE PRODUCTS · FULL-STACK SYSTEMS',
-  phrases: [
-    'i build the system behind the demo.',
-    'ai-native products, shipped end to end.',
-    'idea → interface → intelligence → live.',
-  ],
-  chips: [
-    { label: 'ROLE',     value: 'AI PRODUCT BUILDER', accent: true },
-    { label: 'FLAGSHIP', value: 'BUILDARY.DEV' },
-    { label: 'STACK',    value: 'TS · PYTHON · DART' },
-  ],
-  status: 'SYSTEM ONLINE — SHIPPING',
-  version: 'v2026.8',
-  footRight: 'TÜRKİYE · OPEN SOURCE · AI-NATIVE',
+  statement: 'I build useful AI products—',
+  statementAccent: 'from interface to infrastructure.',
+  meta: 'MANAGEMENT INFORMATION SYSTEMS · CODIONX · TÜRKİYE',
+  rail: 'BUILDARY · RESEARCH AGENTS · INTERFACES · OPEN SOURCE · SHIPPED · ',
 };
 
-const W = 1200, H = 420, R = 26;
-const CX = 952, CY = 210;          // sağdaki halka sisteminin merkezi
-const L = 56;                      // sol kolon
+const DESKTOP = {
+  width: 1200,
+  height: 460,
+  wordmark: { x: 58, y: 184, size: 92, spacing: 3 },
+  eyebrow: { x: 62, y: 66 },
+  statement: { x: 62, y: 246, secondY: 282, size: 25 },
+  meta: { x: 62, y: 340 },
+  figure: { x: 842, y: -12, width: 300, height: 404 },
+  halo: { cx: 996, cy: 220, rx: 182, ry: 192 },
+  railY: 398,
+  railHeight: 62,
+  railSize: 18,
+  railSpan: 1060,
+  label: 'desktop',
+};
 
-// Merkez etrafında dönen bir grup üretir.
-const spin = (dur, dir = 1, inner) => `
-  <g>${inner}
-    <animateTransform attributeName="transform" type="rotate"
-      from="${dir > 0 ? 0 : 360} ${CX} ${CY}" to="${dir > 0 ? 360 : 0} ${CX} ${CY}"
-      dur="${dur}s" repeatCount="indefinite"/>
+const MOBILE = {
+  width: 720,
+  height: 720,
+  wordmark: { x: 42, y: 153, size: 76, spacing: 2 },
+  eyebrow: { x: 44, y: 57 },
+  statement: { x: 44, y: 212, secondY: 248, size: 25 },
+  meta: { x: 44, y: 302 },
+  figure: { x: 352, y: 272, width: 310, height: 417 },
+  halo: { cx: 506, cy: 494, rx: 180, ry: 190 },
+  railY: 658,
+  railHeight: 62,
+  railSize: 17,
+  railSpan: 1060,
+  label: 'mobile',
+};
+
+function railText(layout) {
+  const y = layout.railY + 39;
+  const copies = [0, layout.railSpan, layout.railSpan * 2]
+    .map((x) => `<text x="${x}" y="${y}" class="rail-text">${esc(HERO.rail)}</text>`)
+    .join('');
+
+  return `<g class="rail" aria-hidden="true">
+    <rect x="0" y="${layout.railY}" width="${layout.width}" height="${layout.railHeight}" fill="${T.accent}"/>
+    <g class="rail-track">${copies}</g>
   </g>`;
-
-const ring = (r, stroke, w, dash, opacity = 1) =>
-  `<circle cx="${CX}" cy="${CY}" r="${r}" fill="none" stroke="${stroke}" stroke-width="${w}"${dash ? ` stroke-dasharray="${dash}"` : ''} opacity="${opacity}"/>`;
-
-// Dış halkanın çevresine 48 adet ölçek çizgisi.
-function ticks(r, count = 48) {
-  let out = '';
-  for (let i = 0; i < count; i++) {
-    const a = (i / count) * Math.PI * 2;
-    const long = i % 6 === 0;
-    const r1 = r, r2 = r + (long ? 10 : 5);
-    out += `<line x1="${n(CX + Math.cos(a) * r1)}" y1="${n(CY + Math.sin(a) * r1)}" x2="${n(CX + Math.cos(a) * r2)}" y2="${n(CY + Math.sin(a) * r2)}" stroke="${long ? T.accentDeep : T.line2}" stroke-width="${long ? 1.6 : 1}" opacity="${long ? '.9' : '.5'}"/>`;
-  }
-  return out;
 }
 
-// Ekolayzır — canlı sistem hissi için 7 çubuk.
-function equalizer(x, y, bars = 7) {
-  let out = '';
-  for (let i = 0; i < bars; i++) {
-    const h0 = 4 + ((i * 5) % 11);
-    const h1 = 6 + ((i * 7) % 17);
-    out += `<rect x="${x + i * 6}" y="${y - h0}" width="3" height="${h0}" rx="1.5" fill="${T.accent}" opacity=".8">
-      <animate attributeName="height" values="${h0};${h1};${3};${h0}" dur="${(1.1 + i * 0.17).toFixed(2)}s" repeatCount="indefinite"/>
-      <animate attributeName="y" values="${y - h0};${y - h1};${y - 3};${y - h0}" dur="${(1.1 + i * 0.17).toFixed(2)}s" repeatCount="indefinite"/>
-    </rect>`;
-  }
-  return out;
-}
+export async function buildHero(baseUrl, variant = 'desktop') {
+  const figure = await fs.readFile(new URL('../assets/aizen-reference-lossless.webp', baseUrl));
+  const layout = variant === 'mobile' ? MOBILE : DESKTOP;
+  const { width: W, height: H } = layout;
+  const f = layout.figure;
+  const a = layout.halo;
 
-export function buildHero() {
-  const tw = typewriter({ id: 'h', phrases: HERO.phrases, x: L + 22, y: 252, fontSize: 15 });
-
-  const chips = HERO.chips.map((c, i) => chip({ x: L + i * 194, y: 288, w: 180, h: 52, ...c })).join('');
-
-  const svg = `${svgOpen(W, H, `${HERO.wordmark} — animated profile hero`,
-    'Animated noir hero card: kinetic AETHRIXN wordmark with a light sweep, a rotating aether ring system, a live typewriter line and status telemetry.', 'h')}
+  return `${svgOpen(W, H, `AETHRIXN — ${layout.label} profile hero`,
+    'A minimal black profile cover for Mirza Şimşek with a bright turquoise moving index and an anime character portrait.', `hero-${layout.label}`)}
   <defs>
-    ${defsCommon('h')}
-    <clipPath id="h-frame"><rect width="${W}" height="${H}" rx="${R}"/></clipPath>
-    <radialGradient id="h-core" cx=".5" cy=".5" r=".5">
-      <stop stop-color="${T.accent}" stop-opacity=".55"/><stop offset=".55" stop-color="${T.accentDeep}" stop-opacity=".25"/><stop offset="1" stop-color="${T.accent}" stop-opacity="0"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#020405"/><stop offset=".62" stop-color="#070A0B"/><stop offset="1" stop-color="#020405"/>
+    </linearGradient>
+    <linearGradient id="figure-fade" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#020405"/><stop offset=".2" stop-color="#020405" stop-opacity=".22"/><stop offset="1" stop-color="#020405" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="${T.accent}" stop-opacity="0"/>
+      <stop offset=".5" stop-color="${T.accent}" stop-opacity=".12"/>
+      <stop offset="1" stop-color="${T.accent}" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop stop-color="${T.accent}" stop-opacity=".20"/>
+      <stop offset=".55" stop-color="${T.accent}" stop-opacity=".065"/>
+      <stop offset="1" stop-color="${T.accent}" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="h-radar" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="${T.accent}" stop-opacity=".28"/><stop offset="1" stop-color="${T.accent}" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="h-rule" x1="0" y1="0" x2="1" y2="0">
-      <stop stop-color="${T.accent}"/><stop offset="1" stop-color="${T.accent}" stop-opacity="0"/>
-    </linearGradient>
-    <clipPath id="h-sweep">
-      <rect y="70" width="150" height="120" transform="skewX(-16)" x="-320">
-        <animate attributeName="x" values="-320;760;760" keyTimes="0;.45;1" dur="7s" repeatCount="indefinite"/>
+    <filter id="duotone" color-interpolation-filters="sRGB" x="-15%" y="-15%" width="130%" height="130%">
+      <feColorMatrix type="matrix" values="
+        .16 .50 .05 0 0
+        .19 .62 .06 0 0
+        .20 .67 .07 0 0
+        0 0 0 1 0"/>
+      <feComponentTransfer>
+        <feFuncR type="gamma" amplitude="1" exponent="1.22" offset="0"/>
+        <feFuncG type="gamma" amplitude="1" exponent="1.18" offset="0"/>
+        <feFuncB type="gamma" amplitude="1" exponent="1.12" offset="0"/>
+      </feComponentTransfer>
+    </filter>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <clipPath id="frame"><rect width="${W}" height="${H}" rx="14"/></clipPath>
+    <clipPath id="portrait-reveal">
+      <rect x="${f.x - 28}" y="${f.y}" width="${f.width + 56}" height="${f.height}">
+        <animate attributeName="height" from="0" to="${f.height}" dur="1.4s" begin=".15s" fill="freeze"/>
       </rect>
     </clipPath>
-    ${tw.defs}
   </defs>
+  <style>
+    .sans { font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,Helvetica,Arial,sans-serif; }
+    .mono { font-family: ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace; }
+    .wordmark { animation: title-in .9s cubic-bezier(.2,.8,.2,1) both; }
+    .copy { animation: copy-in .85s ease-out .18s both; }
+    .figure { transform-box: fill-box; transform-origin: center; animation: figure-in 1.15s cubic-bezier(.2,.8,.2,1) both, float 7s ease-in-out 1.15s infinite; }
+    .sheen { animation: sheen 10s ease-in-out infinite; }
+    .rail-track { animation: rail 18s linear infinite; }
+    .rail-text { font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif; font-size: ${layout.railSize}px; font-weight: 900; letter-spacing: 3.4px; fill: #001613; white-space: pre; }
+    @keyframes title-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes copy-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes figure-in { from { opacity: 0; transform: translateY(22px); } to { opacity: .98; transform: translateY(0); } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes sheen { 0%,52% { transform: translateX(-${W * .26}px); opacity: 0; } 62% { opacity: 1; } 82%,100% { transform: translateX(${W * 1.2}px); opacity: 0; } }
+    @keyframes rail { from { transform: translateX(0); } to { transform: translateX(-${layout.railSpan}px); } }
+    @media (prefers-reduced-motion: reduce) {
+      .wordmark,.copy,.figure,.sheen,.rail-track { animation: none !important; }
+      .wordmark,.copy,.figure { opacity: 1; transform: none; }
+      animate,animateTransform { display: none; }
+    }
+  </style>
 
-  <g clip-path="url(#h-frame)">
-    <rect width="${W}" height="${H}" fill="url(#h-bg)"/>
-    ${auroraLayer('h', W, H)}
-    <rect width="${W}" height="${H}" fill="url(#h-grid)"/>
+  <g clip-path="url(#frame)">
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>
+    <rect x="0" y="0" width="4" height="${layout.railY}" fill="${T.accent}"/>
+    <path d="M0 ${layout.railY - 1}H${W}" stroke="#1B2728"/>
 
-    <!-- Aether halka sistemi -->
-    <g>
-      <circle cx="${CX}" cy="${CY}" r="205" fill="url(#h-core)"/>
-      ${spin(120, 1, ticks(196))}
-      ${ring(178, T.line2, 1, '2 10', .8)}
-      ${spin(52, -1, ring(142, T.accentDeep, 1.4, '38 16'))}
-      ${ring(104, T.line2, 1, '', .7)}
-      ${spin(28, 1, ring(66, T.accentDeep, 1.6, '9 8'))}
-      ${spin(14, 1, `<circle cx="${CX}" cy="${CY}" r="142" fill="none" stroke="${T.accent}" stroke-width="2" stroke-linecap="round" stroke-dasharray="150 742" opacity=".9"/>`)}
-      ${spin(9, 1, `<path d="M${CX} ${CY} L${CX + 178} ${CY - 62} A178 178 0 0 1 ${CX + 178} ${CY + 62} Z" fill="url(#h-radar)"/>`)}
+    <g aria-hidden="true">
+      <ellipse cx="${a.cx}" cy="${a.cy}" rx="${a.rx}" ry="${a.ry}" fill="url(#halo)" filter="url(#soft)"/>
+      <path d="M${a.cx - 112} ${a.cy + 114}L${a.cx + 92} ${a.cy - 160}" stroke="${T.accent}" stroke-opacity=".13"/>
+      <path d="M${a.cx - 72} ${a.cy + 150}L${a.cx + 132} ${a.cy - 124}" stroke="#F4F7F8" stroke-opacity=".07"/>
+    </g>
 
-      <!-- Yörüngedeki düğümler -->
-      ${spin(19, 1, `<g filter="url(#h-glow)"><circle cx="${CX + 178}" cy="${CY}" r="4" fill="${T.accentSoft}"/></g>`)}
-      ${spin(31, -1, `<g filter="url(#h-glow)"><circle cx="${CX + 104}" cy="${CY}" r="3" fill="${T.accent}"/></g>`)}
-      ${spin(24, 1, `<circle cx="${CX + 142}" cy="${CY}" r="2.4" fill="${T.textDim}"/>`)}
+    <g class="figure" clip-path="url(#portrait-reveal)" filter="url(#duotone)">
+      <image href="data:image/webp;base64,${figure.toString('base64')}" x="${f.x}" y="${f.y}" width="${f.width}" height="${f.height}" preserveAspectRatio="xMidYMid meet"/>
+    </g>
+    <rect x="${Math.max(0, f.x - 64)}" y="0" width="120" height="${layout.railY}" fill="url(#figure-fade)" opacity=".72"/>
 
-      <!-- Sonar çekirdeği -->
-      <circle cx="${CX}" cy="${CY}" r="30" fill="none" stroke="${T.accent}" stroke-width="1.2" opacity=".5">
-        <animate attributeName="r" values="30;190" dur="4.6s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values=".5;0" dur="4.6s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${CX}" cy="${CY}" r="30" fill="none" stroke="${T.accent}" stroke-width="1.2" opacity=".5">
-        <animate attributeName="r" values="30;190" dur="4.6s" begin="-2.3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values=".5;0" dur="4.6s" begin="-2.3s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="${CX}" cy="${CY}" r="27" fill="${T.panelHi}" stroke="${T.accent}" stroke-width="1.6"/>
-      <g filter="url(#h-glow)">
-        <circle cx="${CX}" cy="${CY}" r="7" fill="${T.accentSoft}">
-          <animate attributeName="r" values="7;9.5;7" dur="2.6s" repeatCount="indefinite"/>
-        </circle>
+    <g class="sans">
+      <text class="copy" x="${layout.eyebrow.x}" y="${layout.eyebrow.y}" fill="${T.accent}" font-size="12" font-weight="800" letter-spacing="3.1">${esc(HERO.eyebrow)}</text>
+      <text class="wordmark" x="${layout.wordmark.x}" y="${layout.wordmark.y}" fill="#F4F7F8" font-size="${layout.wordmark.size}" font-weight="900" letter-spacing="${layout.wordmark.spacing}">${esc(HERO.wordmark)}</text>
+      <g class="copy" font-size="${layout.statement.size}" font-weight="650">
+        <text x="${layout.statement.x}" y="${layout.statement.y}" fill="#E6EBEC">${esc(HERO.statement)}</text>
+        <text x="${layout.statement.x}" y="${layout.statement.secondY}" fill="${T.accent}">${esc(HERO.statementAccent)}</text>
       </g>
-      <text x="${CX}" y="${CY + 52}" text-anchor="middle" fill="${T.textFaint}" font-family="${T.mono}" font-size="9.5" font-weight="700" letter-spacing="2.4">CORE</text>
+      <text class="copy mono" x="${layout.meta.x}" y="${layout.meta.y}" fill="#8E9A9E" font-size="11" font-weight="650" letter-spacing="1.8">${esc(HERO.meta)}</text>
     </g>
 
-    <!-- Sol kolon -->
-    <g>
-      ${pulseDot(L + 4, 59, 3.4, T.accent)}
-      <text x="${L + 20}" y="63" fill="${T.textDim}" font-family="${T.mono}" font-size="11.5" font-weight="700" letter-spacing="2.6">${esc(HERO.eyebrow)}</text>
-
-      <text x="${L + 3}" y="157" fill="${T.accentDeep}" font-family="${T.sans}" font-size="76" font-weight="900" letter-spacing="7" opacity=".55">${esc(HERO.wordmark)}</text>
-      <text x="${L}" y="154" fill="${T.text}" font-family="${T.sans}" font-size="76" font-weight="900" letter-spacing="7">${esc(HERO.wordmark)}</text>
-      <g clip-path="url(#h-sweep)">
-        <text x="${L}" y="154" fill="${T.accent}" font-family="${T.sans}" font-size="76" font-weight="900" letter-spacing="7">${esc(HERO.wordmark)}</text>
-      </g>
-
-      <text x="${L}" y="188" fill="${T.textFaint}" font-family="${T.mono}" font-size="11" font-weight="600" letter-spacing="2">${esc(HERO.subtitle)}</text>
-
-      <rect x="${L}" y="210" width="520" height="1.6" fill="url(#h-rule)">
-        <animate attributeName="width" values="0;520;520" keyTimes="0;.28;1" dur="7s" repeatCount="indefinite"/>
-      </rect>
-
-      <text x="${L}" y="252" fill="${T.accent}" font-family="${T.mono}" font-size="15" font-weight="700">$</text>
-      ${tw.body}
-
-      ${chips}
-
-      ${pulseDot(L + 4, 372, 3, T.accent, 1.8)}
-      <text x="${L + 20}" y="376" fill="${T.textDim}" font-family="${T.mono}" font-size="11" font-weight="700" letter-spacing="2">${esc(HERO.status)}</text>
-      ${equalizer(L + 232, 379)}
-    </g>
-
-    <!-- Sağ üst sürüm etiketi -->
-    <g>
-      <rect x="1040" y="42" width="104" height="26" rx="13" fill="${T.panel}" stroke="${T.line2}"/>
-      ${pulseDot(1058, 55, 3, T.accent, 1.6)}
-      <text x="1072" y="59" fill="${T.textDim}" font-family="${T.mono}" font-size="10.5" font-weight="700" letter-spacing="1.6">${esc(HERO.version)}</text>
-    </g>
-    <text x="1144" y="378" text-anchor="end" fill="${T.textFaint}" font-family="${T.mono}" font-size="11" font-weight="700" letter-spacing="2">${esc(HERO.footRight)}</text>
-
-    <rect width="${W}" height="${H}" fill="url(#h-vig)"/>
-    ${scanline(W, H, 7)}
+    <rect class="sheen" x="-${W * .24}" y="0" width="${W * .18}" height="${layout.railY}" fill="url(#sheen)" transform="skewX(-14)"/>
+    ${railText(layout)}
+    <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="13.5" fill="none" stroke="#20292B"/>
   </g>
-  ${marchingBorder(W, H, R)}
 </svg>`;
-  return svg;
 }

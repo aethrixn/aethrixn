@@ -18,14 +18,14 @@ export const T = {
   textSoft:  '#7B8C9D',
   textFaint: '#576674',
 
-  // TEK vurgu rengi (aether) + tonları
-  accent:     '#39D7FF',
-  accentSoft: '#A8EEFF',
-  accentDeep: '#0C4F63',
-  accentInk:  '#062A36',
+  // TEK vurgu rengi: parlak, temiz turkuaz. Hareket ve aktif durumlarda kullanılır.
+  accent:     '#00EAD0',
+  accentSoft: '#A8FFF5',
+  accentDeep: '#007F75',
+  accentInk:  '#003B36',
 
   // Durum renkleri — vurgu ailesinden türetilmiş, palet bozulmasın
-  live:  '#39D7FF',
+  live:  '#00EAD0',
   build: '#7FE3B0',
   lab:   '#8C9BAA',
 
