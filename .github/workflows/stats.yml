@@ -1,0 +1,38 @@
+name: Refresh GitHub stats card
+
+on:
+  schedule:
+    - cron: "17 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Render stats card
+        env:
+          # Gizli repo katkılarını saymak için read:user yetkili bir PROFILE_STATS_TOKEN sırrı eklenebilir.
+          GITHUB_TOKEN: ${{ secrets.PROFILE_STATS_TOKEN || secrets.GITHUB_TOKEN }}
+        run: node scripts/stats.mjs
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- assets; then
+            echo "Kart değişmedi."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets
+          git commit -m "chore: refresh github stats card"
+          git push
